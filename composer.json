@@ -1,0 +1,16 @@
+{
+    "name": "hexlet/code",
+    "description": "CLI app for getting differrence between files",
+    "type": "project",
+    "require-dev": {
+        "docopt/docopt": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Egor",
+            "email": "woornir@yandex.ru"
+        }
+    ],
+    "require": {}
+}
