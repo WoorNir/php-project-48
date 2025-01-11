@@ -2,9 +2,7 @@
     "name": "hexlet/code",
     "description": "CLI app for getting differrence between files",
     "type": "project",
-    "require-dev": {
-        "docopt/docopt": "^1.0"
-    },
+    "require-dev": {},
     "license": "MIT",
     "authors": [
         {
@@ -12,5 +10,10 @@
             "email": "woornir@yandex.ru"
         }
     ],
-    "require": {}
+    "bin": [
+        "bin/gendiff.php"
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
 }
