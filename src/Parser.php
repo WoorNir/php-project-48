@@ -2,7 +2,8 @@
 
 namespace src\Parser;
 
-function parse($file)
+function parse($filepath)
 {
-    return json_decode(file_get_contents($file));
+    $content = file_get_contents($filepath);
+    return json_decode($content, true);
 }
