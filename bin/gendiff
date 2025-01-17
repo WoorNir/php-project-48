@@ -24,10 +24,8 @@ Options:
 DOC;
 
 $args = Docopt::handle($doc, array('version' => 'gendiff 1.0'));
-foreach ($args as $k => $v) {
-    echo $k . ': ' . json_encode($v) . PHP_EOL;
-}
 
 $format=$args['--format'];
-$firstFile = realpath($args['firstFile']);
-$secondFile = realpath($args['secondFile']);
+
+$firstFile = realpath($args['<firstFile>']);
+$secondFile = realpath($args['<secondFile>']);
