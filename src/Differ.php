@@ -2,7 +2,6 @@
 
 namespace src\Differ;
 
-
 function genDiff($first, $second)
 {
     $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
