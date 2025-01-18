@@ -3,7 +3,8 @@
     "description": "CLI app for getting differrence between files",
     "type": "project",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.11"
+        "squizlabs/php_codesniffer": "^3.11",
+        "phpunit/phpunit": "^11.5"
     },
     "license": "MIT",
     "authors": [
