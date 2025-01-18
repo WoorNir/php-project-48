@@ -2,4 +2,4 @@
 [![Actions Status](https://github.com/WoorNir/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/WoorNir/php-project-48/actions)
 
 # Comparing two json files
-[![asciicast](https://asciinema.org/a/CFi70jHmNYs3ndroQe7d1D4SJ)
+[![asciicast](https://asciinema.org/a/CFi70jHmNYs3ndroQe7d1D4SJ)]
