@@ -17,15 +17,37 @@ function getDiffLine($key, $first, $second)
 {
     $line = '';
     if (array_key_exists($key, $first) && array_key_exists($key, $second)) {
-        if ($first[$key] === $second[$key]) {
-            $line = "   $key:" . " $first[$key]";
-        } else {
-            $line = " - $key:" . "$first[$key]\n" . " + $key:" . "$second[$key]";
-        }
+        $line = getLineIfTwoExists($key, $first[$key], $second[$key]);
     } elseif (array_key_exists($key, $first) && !array_key_exists($key, $second)) {
-        $line = " - $key:" . "$first[$key]";
+        $line = getLineIfFirstExists($key, $first[$key]);
     } elseif (!array_key_exists($key, $first) && array_key_exists($key, $second)) {
-        $line = " + $key:" . "$second[$key]";
+        $line = getLineIfSecondExists($key, $second[$key]);
     }
     return $line;
+}
+
+function getLineIfTwoExists($key, $firstValue, $secondValue)
+{
+    if ($firstValue === $secondValue) {
+        return "   $key: " . formatValue($firstValue);
+    } else {
+        return " - $key: " . formatValue($firstValue) . "\n" . " + $key: " . formatValue($secondValue);
+    }
+}
+
+function getLineIfFirstExists($key, $value)
+{
+    return " - $key: " . formatValue($value);
+}
+
+function getLineIfSecondExists($key, $value)
+{
+    return " + $key: " . formatValue($value);
+}
+
+function formatValue($value) {
+    if (is_bool($value)) {
+        return $value ? 'true' : 'false';
+    }
+    return $value;
 }
