@@ -13,6 +13,9 @@
             "email": "woornir@yandex.ru"
         }
     ],
+    "scripts": {
+        "test": "phpunit tests"
+    },
     "bin": [
         "bin/gendiff.php"
     ],
