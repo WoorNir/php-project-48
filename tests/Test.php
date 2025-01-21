@@ -16,7 +16,7 @@ class Test extends TestCase
         $result = genDiff($firstFile, $secondFile);
         $this->assertEquals($expected, $result);
 
-        $expected = file_get_contents(__DIR__ ."/fixtures/expectedIdentical.txt");
+        $expected = file_get_contents(__DIR__ . "/fixtures/expectedIdentical.txt");
         $firstFile = __DIR__ . "/fixtures/file1.json";
         $secondFile = __DIR__ . "/fixtures/file1.json";
         $result = genDiff($firstFile, $secondFile);
