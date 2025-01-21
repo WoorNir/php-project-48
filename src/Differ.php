@@ -17,12 +17,12 @@ function makeDiff($first, $second)
     sort($keys);
     $result = [];
     foreach ($keys as $key) {
-        $result[] = getDiffLine($key, $first, $second);
+        $result[] = getDiffLines($key, $first, $second);
     }
     return "{\n" . implode("\n", $result) . "\n}\n";
 }
 
-function getDiffLine($key, $first, $second)
+function getDiffLines($key, $first, $second)
 {
     $line = '';
     if (array_key_exists($key, $first) && array_key_exists($key, $second)) {
