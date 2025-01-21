@@ -1,8 +1,17 @@
 <?php
 
-namespace src\Differ;
+namespace Src\Differ;
 
-function genDiff($first, $second)
+use function Src\Parser\parse;
+
+function genDiff($firstFilePath, $secondFilePath)
+{
+    $first = parse($firstFilePath);
+    $second = parse($secondFilePath);
+    return makeDiff($first, $second);
+}
+
+function makeDiff($first, $second)
 {
     $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
     sort($keys);
@@ -45,7 +54,8 @@ function getLineIfSecondExists($key, $value)
     return " + $key: " . formatValue($value);
 }
 
-function formatValue($value) {
+function formatValue($value)
+{
     if (is_bool($value)) {
         return $value ? 'true' : 'false';
     }

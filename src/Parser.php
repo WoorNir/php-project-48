@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Parser;
+namespace Src\Parser;
 
 function parse($filepath)
 {
