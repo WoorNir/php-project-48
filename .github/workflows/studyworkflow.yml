@@ -1,0 +1,33 @@
+name: CI/CD
+
+on:
+  - push
+  - pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+          php-version: '8.3.6'
+    - name: Install
+      run: make install
+    - name: Run Linter
+      run: make lint
+    - name: make test-coverage
+      uses: paambaati/codeclimate-action@v5
+      env: 
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: make test-coverage
+        coverageLocation: build/logs/clover.xml:clover
+        debug: true
+        
