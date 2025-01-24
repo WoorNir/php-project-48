@@ -13,16 +13,16 @@ function genDiff($firstFilePath, $secondFilePath)
 
 function makeDiff($first, $second)
 {
-    $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
+    $keys = array_unique(array_merge(array_keys((array)$first), array_keys((array)$second)));
     sort($keys);
     $result = [];
     foreach ($keys as $key) {
-        $result[] = getDiffLines($key, $first, $second);
+        $result[] = getDiffLines($key, (array) $first, (array) $second);
     }
     return "{\n" . implode("\n", $result) . "\n}\n";
 }
 
-function getDiffLines($key, $first, $second)
+function getDiffLines($key, array $first, array $second): string
 {
     $line = '';
     if (array_key_exists($key, $first) && array_key_exists($key, $second)) {

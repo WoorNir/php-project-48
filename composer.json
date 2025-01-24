@@ -21,11 +21,12 @@
     ],
     "autoload": {
         "files": [
-            "src/Parser.php",
+            "src/Parsers.php",
             "src/Differ.php"
         ]
     },
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^7.2"
     }
 }
