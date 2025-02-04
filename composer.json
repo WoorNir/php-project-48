@@ -22,7 +22,8 @@
     "autoload": {
         "files": [
             "src/Parsers.php",
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Stylish.php"
         ]
     },
     "require": {
