@@ -3,61 +3,92 @@
 namespace Src\Differ;
 
 use function Src\Parser\parse;
+use function Src\Stylish\stylish;
 
-function genDiff($firstFilePath, $secondFilePath)
+function genDiff($firstFilePath, $secondFilePath, $format = "stylish")
 {
     $first = parse($firstFilePath);
     $second = parse($secondFilePath);
-    return makeDiff($first, $second);
+    $diff = makeDiff($first, $second);
+
+    if ($format === "stylish") {
+        return stylish($diff);
+    }
+
+    throw new \Exception("Некорректно задан формат");
 }
 
 function makeDiff($first, $second)
 {
     $keys = array_unique(array_merge(array_keys((array)$first), array_keys((array)$second)));
     sort($keys);
-    $result = [];
-    foreach ($keys as $key) {
-        $result[] = getDiffLines($key, (array) $first, (array) $second);
-    }
-    return "{\n" . implode("\n", $result) . "\n}\n";
+    return array_map(
+        fn($key) => makeNode($key, (array)$first, (array)$second),
+        $keys
+    );
 }
 
-function getDiffLines($key, array $first, array $second): string
+function makeNode(string $key, array $first, array $second): array
 {
-    $line = '';
     if (array_key_exists($key, $first) && array_key_exists($key, $second)) {
-        $line = getLineIfTwoExists($key, $first[$key], $second[$key]);
-    } elseif (array_key_exists($key, $first) && !array_key_exists($key, $second)) {
-        $line = getLineIfFirstExists($key, $first[$key]);
-    } elseif (!array_key_exists($key, $first) && array_key_exists($key, $second)) {
-        $line = getLineIfSecondExists($key, $second[$key]);
+        return getNodeWithSameKeys($key, $first[$key], $second[$key]);
+    } elseif (array_key_exists($key, $first)) {
+        return getRemovedNode($key, $first[$key]);
+    } elseif (array_key_exists($key, $second)) {
+        return getAddedNode($key, $second[$key]);
     }
-    return $line;
+
+    return [];
 }
 
-function getLineIfTwoExists($key, $firstValue, $secondValue)
+function getNodeWithSameKeys(string $key, $firstValue, $secondValue): array
 {
-    if ($firstValue === $secondValue) {
-        return "   $key: " . formatValue($firstValue);
+    if (is_array($firstValue) && is_array($secondValue)) {
+        return [
+            'key' => $key,
+            'type' => 'nested',
+            'children' => makeDiff($firstValue, $secondValue),
+            ];
+    } elseif ($firstValue === $secondValue) {
+        return getUnchangedNode($key, $firstValue);
     } else {
-        return " - $key: " . formatValue($firstValue) . "\n" . " + $key: " . formatValue($secondValue);
+        return getChangedNode($key, $firstValue, $secondValue);
     }
 }
 
-function getLineIfFirstExists($key, $value)
+function getUnchangedNode($key, $value): array
 {
-    return " - $key: " . formatValue($value);
+    return [
+        'key' => $key,
+        'type' => 'unchanged',
+        'unchangedValue' => $value
+    ];
 }
 
-function getLineIfSecondExists($key, $value)
+function getChangedNode($key, $oldValue, $newValue): array
 {
-    return " + $key: " . formatValue($value);
+    return [
+        'key' => $key,
+        'type' => 'changed',
+        'oldValue' => $oldValue,
+        'newValue' => $newValue,
+    ];
 }
 
-function formatValue($value)
+function getRemovedNode($key, $value): array
 {
-    if (is_bool($value)) {
-        return $value ? 'true' : 'false';
-    }
-    return $value;
+    return [
+        'key' => $key,
+        'type' => 'removed',
+        'oldValue' => $value
+    ];
+}
+
+function getAddedNode($key, $value): array
+{
+    return [
+        'key' => $key,
+        'type' => 'added',
+        'newValue' => $value
+    ];
 }
