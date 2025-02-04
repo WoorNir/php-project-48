@@ -8,4 +8,5 @@
 
 - [Compare two json files](https://asciinema.org/a/EjBCcujVVLudotZ8lCI11Mla4)
 - [Compare two YAML files](https://asciinema.org/a/AYI9EcyaIuJl4AZL8Wdomc20j)
+- [Comparing nested Structures](https://asciinema.org/a/n2XBDDFMNbyyqW6FIuDgqEjmN)
 
