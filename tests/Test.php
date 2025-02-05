@@ -17,15 +17,19 @@ class Test extends TestCase
         $this->assertEquals($expected, $result);
 
         $expected = file_get_contents(__DIR__ . "/fixtures/expected.txt");
-        $firstFile = __DIR__ . "/fixtures/file1.json";
+        $firstFile = __DIR__ . "/fixtures/file1.yml";
         $secondFile = __DIR__ . "/fixtures/file2.yml";
         $result = genDiff($firstFile, $secondFile);
         $this->assertEquals($expected, $result);
 
         $expected = file_get_contents(__DIR__ . "/fixtures/expected.txt");
-        $firstFile = __DIR__ . "/fixtures/file1.yml";
+        $firstFile = __DIR__ . "/fixtures/file1.json";
         $secondFile = __DIR__ . "/fixtures/file2.yml";
         $result = genDiff($firstFile, $secondFile);
+        $this->assertEquals($expected, $result);
+
+        $expected = file_get_contents(__DIR__ . "/fixtures/expctedPlain.txt");
+        $result = genDiff($firstFile, $secondFile, "plain");
         $this->assertEquals($expected, $result);
     }
 }
