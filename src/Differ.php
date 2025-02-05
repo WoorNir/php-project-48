@@ -3,24 +3,19 @@
 namespace Src\Differ;
 
 use function Src\Parser\parse;
-use function Src\Stylish\stylish;
+use function Src\Stylish\formatter;
 
-function genDiff($firstFilePath, $secondFilePath, $format = "stylish")
+function genDiff(string $firstFilePath, string $secondFilePath, $format = "stylish")
 {
     $first = parse($firstFilePath);
     $second = parse($secondFilePath);
     $diff = makeDiff($first, $second);
-
-    if ($format === "stylish") {
-        return stylish($diff);
-    }
-
-    throw new \Exception("Некорректно задан формат");
+    return formatter($diff, $format);
 }
 
-function makeDiff($first, $second)
+function makeDiff(array $first, array $second): array
 {
-    $keys = array_unique(array_merge(array_keys((array)$first), array_keys((array)$second)));
+    $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
     sort($keys);
     return array_map(
         fn($key) => makeNode($key, (array)$first, (array)$second),
@@ -56,7 +51,7 @@ function getNodeWithSameKeys(string $key, $firstValue, $secondValue): array
     }
 }
 
-function getUnchangedNode($key, $value): array
+function getUnchangedNode(string $key, $value): array
 {
     return [
         'key' => $key,
@@ -65,7 +60,7 @@ function getUnchangedNode($key, $value): array
     ];
 }
 
-function getChangedNode($key, $oldValue, $newValue): array
+function getChangedNode(string $key, $oldValue, $newValue): array
 {
     return [
         'key' => $key,
@@ -75,7 +70,7 @@ function getChangedNode($key, $oldValue, $newValue): array
     ];
 }
 
-function getRemovedNode($key, $value): array
+function getRemovedNode(string $key, $value): array
 {
     return [
         'key' => $key,
@@ -84,7 +79,7 @@ function getRemovedNode($key, $value): array
     ];
 }
 
-function getAddedNode($key, $value): array
+function getAddedNode(string $key, $value): array
 {
     return [
         'key' => $key,

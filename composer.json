@@ -23,7 +23,8 @@
         "files": [
             "src/Parsers.php",
             "src/Differ.php",
-            "src/Stylish.php"
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Formatters.php"
         ]
     },
     "require": {

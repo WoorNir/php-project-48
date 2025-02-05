@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Stylish;
+namespace Src\Formatters\Stylish;
 
-function stylish($diff)
+function getStylish($diff)
 {
     $body = makeBody($diff);
     return "{\n{$body}\n}\n";
