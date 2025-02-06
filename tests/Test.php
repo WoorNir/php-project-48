@@ -31,5 +31,9 @@ class Test extends TestCase
         $expected = file_get_contents(__DIR__ . "/fixtures/expectedPlain.txt");
         $result = genDiff($firstFile, $secondFile, "plain");
         $this->assertEquals($expected, $result);
+
+        $expected = file_get_contents(__DIR__ . "/fixtures/expectedJson.txt");
+        $result = genDiff($firstFile, $secondFile, "json");
+        $this->assertEquals($expected, $result);
     }
 }
