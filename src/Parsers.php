@@ -9,7 +9,11 @@ function parse(string $filepath)
     if (!is_readable($filepath)) {
         throw new \Exception("Неккоректно задан путь");
     }
-    (string)$content = file_get_contents($filepath);
+    $content = file_get_contents($filepath);
+    if ($content === false) {
+        throw new \Exception("Не удалось прочитать файл");
+    }
+
     switch (pathinfo($filepath, $flags = PATHINFO_EXTENSION)) {
         case 'json':
             return json_decode($content, true);
@@ -17,7 +21,6 @@ function parse(string $filepath)
         case 'yaml':
             return Yaml::parse($content);
         default:
-            echo "Неподдерживаемый формат файла";
-            return null;
+            throw new \Exception ("Неподдерживаемый формат файла");
     }
 }
