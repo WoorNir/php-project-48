@@ -12,6 +12,6 @@ function formatter($diff, $format)
         'stylish' => getStylish($diff),
         'plain' => getPlain($diff),
         'json' => getJson($diff),
-        default => throw new \InvalidArgumentException ("Некорректно заданный формат")
+        default => throw new \InvalidArgumentException("Некорректно заданный формат")
     };
 }
