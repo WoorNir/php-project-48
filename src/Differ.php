@@ -51,7 +51,7 @@ function getNodeWithSameKeys(string $key, $firstValue, $secondValue): array
     }
 }
 
-function getUnchangedNode(string $key, $value): array
+function getUnchangedNode(string $key, mixed $value): array
 {
     return [
         'key' => $key,
@@ -60,7 +60,7 @@ function getUnchangedNode(string $key, $value): array
     ];
 }
 
-function getChangedNode(string $key, $oldValue, $newValue): array
+function getChangedNode(string $key, mixed $oldValue, mixed $newValue): array
 {
     return [
         'key' => $key,
@@ -70,7 +70,7 @@ function getChangedNode(string $key, $oldValue, $newValue): array
     ];
 }
 
-function getRemovedNode(string $key, $value): array
+function getRemovedNode(string $key, mixed $value): array
 {
     return [
         'key' => $key,
@@ -79,7 +79,7 @@ function getRemovedNode(string $key, $value): array
     ];
 }
 
-function getAddedNode(string $key, $value): array
+function getAddedNode(string $key, mixed $value): array
 {
     return [
         'key' => $key,

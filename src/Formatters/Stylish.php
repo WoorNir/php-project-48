@@ -10,11 +10,11 @@ function getStylish(array $diff)
     return "{\n{$body}\n}\n";
 }
 
-function makeBody(array $diff, $depth = 0): string
+function makeBody(array $diff, int $depth = 0): string
 {
     $body = array_reduce(
         $diff,
-        function ($acc, $node) use ($depth) {
+        function ($acc, array $node) use ($depth) {
             $acc[] = match ($node['type']) {
                 'unchanged' => stylishUnchangedValue($node, $depth),
                 'added' => stylishAddedValue($node, $depth),
@@ -30,7 +30,7 @@ function makeBody(array $diff, $depth = 0): string
     return implode("\n", $body);
 }
 
-function formatValue($value, $depth)
+function formatValue($value, int $depth)
 {
     return match (gettype($value)) {
         'boolean' => $value ? 'true' : 'false',
@@ -40,7 +40,7 @@ function formatValue($value, $depth)
     };
 }
 
-function stylishArray($array, $depth)
+function stylishArray($array, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $keys = array_keys($array);
@@ -55,28 +55,28 @@ function stylishArray($array, $depth)
     return "{\n{$body}\n{$indent}}";
 }
 
-function stylishAddedValue($node, $depth)
+function stylishAddedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['newValue'], $depth);
     return "{$indent}  + {$node['key']}: $value";
 }
 
-function stylishRemovedValue($node, $depth)
+function stylishRemovedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['oldValue'], $depth);
     return "{$indent}  - {$node['key']}: $value";
 }
 
-function stylishUnchangedValue($node, $depth)
+function stylishUnchangedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['unchangedValue'], $depth);
     return "{$indent}    {$node['key']}: $value";
 }
 
-function stylishNestedValue($node, $depth)
+function stylishNestedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $innerIndent = str_repeat(' ', (++$depth) * SPACE_COUNTS);
@@ -84,7 +84,7 @@ function stylishNestedValue($node, $depth)
     return "{$indent}    {$node['key']}: {\n{$body}\n{$innerIndent}}";
 }
 
-function stylishChangedValue($node, $depth)
+function stylishChangedValue(array $node, int $depth)
 {
     $result[] = stylishRemovedValue($node, $depth);
     $result[] = stylishAddedValue($node, $depth);
