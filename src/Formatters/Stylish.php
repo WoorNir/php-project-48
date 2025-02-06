@@ -15,31 +15,18 @@ function makeBody($diff, $depth = 0)
     $body = array_reduce(
         $diff,
         function ($acc, $node) use ($depth) {
-            switch ($node['type']) {
-                case 'unchanged':
-                    $acc[] = stylishUnchangedValue($node, $depth);
-                    break;
-                case 'added':
-                    $acc[] = stylishAddedValue($node, $depth);
-                    break;
-                case 'removed':
-                    $acc[] = stylishRemovedValue($node, $depth);
-                    break;
-                case 'changed':
-                    $acc[] = stylishRemovedValue($node, $depth);
-                    $acc[] = stylishAddedValue($node, $depth);
-                    break;
-                case 'nested':
-                    $acc[] = stylishNestedValue($node, $depth);
-                    break;
-                default:
-                    throw new \Exception("Ошибка определения типа узла");
-            }
+            $acc[] = match ($node['type']) {
+                'unchanged' => stylishUnchangedValue($node, $depth),
+                'added' => stylishAddedValue($node, $depth),
+                'removed' => stylishRemovedValue($node, $depth),
+                'changed' => stylishChangedValue($node, $depth),
+                'nested' => stylishNestedValue($node, $depth),
+                default => throw new \Exception("Ошибка определения типа узла")
+            };
             return $acc;
         },
         []
     );
-
     return implode("\n", $body);
 }
 
@@ -95,4 +82,11 @@ function stylishNestedValue($node, $depth)
     $innerIndent = str_repeat(' ', (++$depth) * SPACE_COUNTS);
     $body = makeBody($node['children'], $depth);
     return "{$indent}    {$node['key']}: {\n{$body}\n{$innerIndent}}";
+}
+
+function stylishChangedValue($node, $depth)
+{
+    $result[] = stylishRemovedValue($node, $depth);
+    $result[] = stylishAddedValue($node, $depth);
+    return implode("\n", $result);
 }

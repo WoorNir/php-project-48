@@ -2,9 +2,16 @@
 
 namespace Src\Formatters\Plain;
 
-function getPlain($diff, $path = '')
+function getPlain(array $diff, string $path = '')
 {
-    $lines = array_map(function ($node) use ($path) {
+    $lines = getPlainLines($diff, $path);
+    $result = array_filter($lines, fn($line) => !is_null($line));
+    return implode($result);
+}
+
+function getPlainLines(array $diff, string $path): array
+{
+    return array_map(function ($node) use ($path) {
         $property = $path ? "{$path}.{$node['key']}" : $node['key'];
         switch ($node['type']) {
             case 'nested':
@@ -24,16 +31,12 @@ function getPlain($diff, $path = '')
                 return "Property '{$property}' was updated. From {$oldValue} to {$newValue}\n";
                 break;
             case 'unchanged':
-                return null;
                 break;
             default:
                 throw new \Exception("Ошибка определения типа узла");
         };
     },
     $diff);
-
-    $lines = array_filter($lines, fn($line) => !is_null($line));
-    return implode($lines);
 }
 
 function formatValue($value)
