@@ -21,4 +21,4 @@ make install
 - [Compare two YAML files](https://asciinema.org/a/AYI9EcyaIuJl4AZL8Wdomc20j)
 - [Comparing nested structures](https://asciinema.org/a/n2XBDDFMNbyyqW6FIuDgqEjmN)
 - [Comparing using plain format](https://asciinema.org/a/T1zHJtmyNbTaBsXIM52SJQs4v)
-
+- [Comparing using JSON format](https://asciinema.org/a/xtUEh4vQ0n2eLQ3QB5Itn3B1z)
