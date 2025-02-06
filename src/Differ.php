@@ -5,7 +5,7 @@ namespace Differ\Differ;
 use function Differ\Parser\parse;
 use function Differ\Formatters\formatter;
 
-function genDiff(string $firstFilePath, string $secondFilePath, $format = "stylish")
+function genDiff(string $firstFilePath, string $secondFilePath, string $format = "stylish")
 {
     $first = parse($firstFilePath);
     $second = parse($secondFilePath);
@@ -18,7 +18,7 @@ function makeDiff(array $first, array $second): array
     $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
     sort($keys);
     return array_map(
-        fn($key) => makeNode($key, (array)$first, (array)$second),
+        fn($key) => makeNode($key, $first, $second),
         $keys
     );
 }
@@ -36,7 +36,7 @@ function makeNode(string $key, array $first, array $second): array
     return [];
 }
 
-function getNodeWithSameKeys(string $key, $firstValue, $secondValue): array
+function getNodeWithSameKeys(string $key, mixed $firstValue, mixed $secondValue): array
 {
     if (is_array($firstValue) && is_array($secondValue)) {
         return [
