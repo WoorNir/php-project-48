@@ -28,7 +28,7 @@ class Test extends TestCase
         $result = genDiff($firstFile, $secondFile);
         $this->assertEquals($expected, $result);
 
-        $expected = file_get_contents(__DIR__ . "/fixtures/expctedPlain.txt");
+        $expected = file_get_contents(__DIR__ . "/fixtures/expectedPlain.txt");
         $result = genDiff($firstFile, $secondFile, "plain");
         $this->assertEquals($expected, $result);
     }
