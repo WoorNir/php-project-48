@@ -6,7 +6,6 @@ function getPlain($diff, $path = '')
 {
     $lines = array_map(function ($node) use ($path) {
         $property = $path ? "{$path}.{$node['key']}" : $node['key'];
-        echo "Processing: {$property}\n";
         switch ($node['type']) {
             case 'nested': 
                 return getPlain($node['children'], $property);
