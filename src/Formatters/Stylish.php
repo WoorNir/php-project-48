@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Formatters\Stylish;
+namespace Differ\Formatters\Stylish;
 
 const SPACE_COUNTS = 4;
 

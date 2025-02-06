@@ -1,9 +1,9 @@
 <?php
 
-namespace Src\Differ;
+namespace Differ\Differ;
 
-use function Src\Parser\parse;
-use function Src\Formatters\formatter;
+use function Differ\Parser\parse;
+use function Differ\Formatters\formatter;
 
 function genDiff(string $firstFilePath, string $secondFilePath, $format = "stylish")
 {
