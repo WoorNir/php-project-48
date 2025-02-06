@@ -11,20 +11,21 @@ function getPlain(array $diff, string $path = ''): string
 function getPlainLines(array $diff, string $path): array
 {
     return array_map(function ($node) use ($path) {
-        $property = !empty($path) ? "{$path}.{$node['key']}" : $node['key'];
+        $currentPath = $path === '' ? $node['key'] : "{$path}.{$node['key']}";
+
         switch ($node['type']) {
             case 'nested':
-                return getPlain($node['children'], $property);
+                return getPlain($node['children'], $currentPath);
             case 'added':
                 $value = formatValue($node['newValue']);
-                return "Property '{$property}' was added with value: {$value}\n";
+                return "Property '{$currentPath}' was added with value: {$value}\n";
             case 'removed':
                 $value = formatValue($node['oldValue']);
-                return "Property '{$property}' was removed\n";
+                return "Property '{$currentPath}' was removed\n";
             case 'changed':
                 $oldValue = formatValue($node['oldValue']);
                 $newValue = formatValue($node['newValue']);
-                return "Property '{$property}' was updated. From {$oldValue} to {$newValue}\n";
+                return "Property '{$currentPath}' was updated. From {$oldValue} to {$newValue}\n";
             case 'unchanged':
                 return '';
             default:

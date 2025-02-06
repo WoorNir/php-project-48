@@ -30,7 +30,7 @@ function makeBody(array $diff, int $depth = 0): string
     return implode("\n", $body);
 }
 
-function formatValue($value, int $depth)
+function formatValue(mixed $value, int $depth)
 {
     return match (gettype($value)) {
         'boolean' => $value ? 'true' : 'false',
@@ -40,7 +40,7 @@ function formatValue($value, int $depth)
     };
 }
 
-function stylishArray($array, int $depth)
+function stylishArray(array $array, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $keys = array_keys($array);
