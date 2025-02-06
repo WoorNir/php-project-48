@@ -2,6 +2,8 @@
 
 namespace Src\Formatters\Stylish;
 
+const SPACE_COUNTS = 4;
+
 function getStylish($diff)
 {
     $body = makeBody($diff);
@@ -43,21 +45,17 @@ function makeBody($diff, $depth = 0)
 
 function formatValue($value, $depth)
 {
-    switch (gettype($value)) {
-        case 'boolean':
-            return $value ? 'true' : 'false';
-        case 'array':
-            return stylishArray($value, $depth + 1);
-        case 'NULL':
-            return 'null';
-        default:
-            return $value;
-    }
+    return match (gettype($value)) {
+        'boolean' => $value ? 'true' : 'false',
+        'array' => stylishArray($value, ++$depth),
+        'NULL'=> 'null',
+        default => $value
+    };
 }
 
 function stylishArray($array, $depth)
 {
-    $indent = str_repeat(' ', $depth * 4);
+    $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $keys = array_keys($array);
     $body = array_map(
         function ($key) use ($array, $depth, $indent) {
@@ -72,29 +70,29 @@ function stylishArray($array, $depth)
 
 function stylishAddedValue($node, $depth)
 {
-    $indent = str_repeat(' ', $depth * 4);
+    $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['newValue'], $depth);
     return "{$indent}  + {$node['key']}: $value";
 }
 
 function stylishRemovedValue($node, $depth)
 {
-    $indent = str_repeat(' ', $depth * 4);
+    $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['oldValue'], $depth);
     return "{$indent}  - {$node['key']}: $value";
 }
 
 function stylishUnchangedValue($node, $depth)
 {
-    $indent = str_repeat(' ', $depth * 4);
+    $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $value = formatValue($node['unchangedValue'], $depth);
     return "{$indent}    {$node['key']}: $value";
 }
 
 function stylishNestedValue($node, $depth)
 {
-    $indent = str_repeat(' ', $depth * 4);
-    $innerIndent = str_repeat(' ', ($depth + 1) * 4);
-    $body = makeBody($node['children'], $depth + 1);
+    $indent = str_repeat(' ', $depth * SPACE_COUNTS);
+    $innerIndent = str_repeat(' ', (++$depth) * SPACE_COUNTS);
+    $body = makeBody($node['children'], ++$depth);
     return "{$indent}    {$node['key']}: {\n{$body}\n{$innerIndent}}";
 }
