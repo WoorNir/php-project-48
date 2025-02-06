@@ -34,7 +34,7 @@ function formatValue($value, int $depth)
 {
     return match (gettype($value)) {
         'boolean' => $value ? 'true' : 'false',
-        'array' => stylishArray($value, ++$depth),
+        'array' => stylishArray($value, $depth + 1),
         'NULL'=> 'null',
         default => $value
     };
@@ -79,13 +79,14 @@ function stylishUnchangedValue(array $node, int $depth)
 function stylishNestedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
-    $innerIndent = str_repeat(' ', (++$depth) * SPACE_COUNTS);
-    $body = makeBody($node['children'], $depth);
+    $innerIndent = str_repeat(' ', ($depth + 1) * SPACE_COUNTS);
+    $body = makeBody($node['children'], $depth + 1);
     return "{$indent}    {$node['key']}: {\n{$body}\n{$innerIndent}}";
 }
 
 function stylishChangedValue(array $node, int $depth)
 {
+    $result = [];
     $result[] = stylishRemovedValue($node, $depth);
     $result[] = stylishAddedValue($node, $depth);
     return implode("\n", $result);
