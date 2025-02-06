@@ -93,6 +93,6 @@ function stylishNestedValue($node, $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $innerIndent = str_repeat(' ', (++$depth) * SPACE_COUNTS);
-    $body = makeBody($node['children'], ++$depth);
+    $body = makeBody($node['children'], $depth);
     return "{$indent}    {$node['key']}: {\n{$body}\n{$innerIndent}}";
 }
