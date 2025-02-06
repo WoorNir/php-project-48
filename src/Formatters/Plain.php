@@ -12,16 +12,16 @@ function getPlain($diff, $path = '')
                 break;
             case 'added':
                 $value = formatValue($node['newValue']);
-                return "Property '{$property}' was added with value: {$value}";
+                return "Property '{$property}' was added with value: {$value}\n";
                 break;
             case 'removed':
                 $value = formatValue($node['oldValue']);
-                return "Property '{$property}' was removed";
+                return "Property '{$property}' was removed\n";
                 break;
             case 'changed':
                 $oldValue = formatValue($node['oldValue']);
                 $newValue = formatValue($node['newValue']);
-                return "Property '{$property}' was updated. From {$oldValue} to {$newValue}";
+                return "Property '{$property}' was updated. From {$oldValue} to {$newValue}\n";
                 break;
             case 'unchanged':
                 return null;
@@ -33,7 +33,7 @@ function getPlain($diff, $path = '')
     $diff);
 
     $lines = array_filter($lines, fn($line) => !is_null($line));
-    return implode("\n", $lines);
+    return implode($lines);
 }
 
 function formatValue($value)
