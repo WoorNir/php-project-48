@@ -7,10 +7,10 @@ function getPlain($diff, $path = '')
     $lines = array_map(function ($node) use ($path) {
         $property = $path ? "{$path}.{$node['key']}" : $node['key'];
         switch ($node['type']) {
-            case 'nested': 
+            case 'nested':
                 return getPlain($node['children'], $property);
                 break;
-            case 'added' :
+            case 'added':
                 $value = formatValue($node['newValue']);
                 return "Property '{$property}' was added with value: {$value}";
                 break;
