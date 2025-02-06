@@ -21,6 +21,6 @@ function parse(string $filepath)
         case 'yaml':
             return Yaml::parse($content);
         default:
-            throw new \Exception ("Неподдерживаемый формат файла");
+            throw new \Exception("Неподдерживаемый формат файла");
     }
 }
