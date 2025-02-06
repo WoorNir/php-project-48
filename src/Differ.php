@@ -3,7 +3,7 @@
 namespace Src\Differ;
 
 use function Src\Parser\parse;
-use function Src\Stylish\formatter;
+use function Src\Formatters\formatter;
 
 function genDiff(string $firstFilePath, string $secondFilePath, $format = "stylish")
 {

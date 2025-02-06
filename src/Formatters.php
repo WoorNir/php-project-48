@@ -2,12 +2,11 @@
 
 namespace Src\Formatters;
 
-use function SrcFormatters\Stylish\getStylish;
+use function Src\Formatters\Stylish\getStylish;
 
 function formatter($diff, $format)
 {
     return match ($format) {
         'stylish' => getStylish($diff),
-        'plain' => 
-    }
+    };
 }
