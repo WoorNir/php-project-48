@@ -3,14 +3,14 @@
 namespace Differ\Differ;
 
 use function Differ\Parser\parse;
-use function Differ\Formatters\formatter;
+use function Differ\Formatters\getFormatted;
 
 function genDiff(string $firstFilePath, string $secondFilePath, string $format = "stylish")
 {
     $first = parse($firstFilePath);
     $second = parse($secondFilePath);
     $diff = makeDiff($first, $second);
-    return formatter($diff, $format);
+    return getFormatted($diff, $format);
 }
 
 function makeDiff(array $first, array $second): array
