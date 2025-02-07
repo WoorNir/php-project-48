@@ -15,15 +15,15 @@ function makeBody(array $diff, int $depth = 0): string
     $body = array_reduce(
         $diff,
         function ($acc, array $node) use ($depth) {
-            $acc = array_merge($acc, [match ($node['type']) {
+            $bodyElement = match ($node['type']) {
                 'unchanged' => stylishUnchangedValue($node, $depth),
                 'added' => stylishAddedValue($node, $depth),
                 'removed' => stylishRemovedValue($node, $depth),
                 'changed' => stylishChangedValue($node, $depth),
                 'nested' => stylishNestedValue($node, $depth),
                 default => throw new \Exception("Ошибка определения типа узла")
-            }]);
-            return $acc;
+            };
+            return [...$acc, $bodyElement];
         },
         []
     );
