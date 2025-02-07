@@ -15,14 +15,14 @@ function makeBody(array $diff, int $depth = 0): string
     $body = array_reduce(
         $diff,
         function ($acc, array $node) use ($depth) {
-            $acc[] = match ($node['type']) {
+            $acc = array_merge($acc, [match ($node['type']) {
                 'unchanged' => stylishUnchangedValue($node, $depth),
                 'added' => stylishAddedValue($node, $depth),
                 'removed' => stylishRemovedValue($node, $depth),
                 'changed' => stylishChangedValue($node, $depth),
                 'nested' => stylishNestedValue($node, $depth),
                 default => throw new \Exception("Ошибка определения типа узла")
-            };
+            }]);
             return $acc;
         },
         []
@@ -44,15 +44,15 @@ function stylishArray(array $array, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
     $keys = array_keys($array);
-    $body = array_map(
+    $bodyAsArray = array_map(
         function ($key) use ($array, $depth, $indent) {
             $value = formatValue($array[$key], $depth);
             return "{$indent}    {$key}: {$value}";
         },
         $keys
     );
-    $body = implode("\n", $body);
-    return "{\n{$body}\n{$indent}}";
+    $bodyAsString = implode("\n", $bodyAsArray);
+    return "{\n{$bodyAsString}\n{$indent}}";
 }
 
 function stylishAddedValue(array $node, int $depth)
@@ -86,8 +86,6 @@ function stylishNestedValue(array $node, int $depth)
 
 function stylishChangedValue(array $node, int $depth)
 {
-    $result = [];
-    $result[] = stylishRemovedValue($node, $depth);
-    $result[] = stylishAddedValue($node, $depth);
+    $result = array_merge([stylishRemovedValue($node, $depth)], [stylishAddedValue($node, $depth)]);
     return implode("\n", $result);
 }
