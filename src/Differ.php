@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use function Differ\Parser\parse;
 use function Differ\Formatters\getFormatted;
+use function Functional\sort;
 
 function genDiff(string $firstFilePath, string $secondFilePath, string $format = "stylish")
 {
@@ -16,10 +17,10 @@ function genDiff(string $firstFilePath, string $secondFilePath, string $format =
 function makeDiff(array $first, array $second): array
 {
     $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
-    sort($keys);
+    $sortedKeys = sort($keys, fn($key1, $key2) => $key1 <=> $key2);
     return array_map(
         fn($key) => makeNode($key, $first, $second),
-        $keys
+        $sortedKeys
     );
 }
 
