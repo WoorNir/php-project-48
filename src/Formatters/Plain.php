@@ -20,7 +20,6 @@ function getPlainLines(array $diff, string $path): array
                 $value = formatValue($node['newValue']);
                 return "Property '{$currentPath}' was added with value: {$value}\n";
             case 'removed':
-                $value = formatValue($node['oldValue']);
                 return "Property '{$currentPath}' was removed\n";
             case 'changed':
                 $oldValue = formatValue($node['oldValue']);
