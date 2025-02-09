@@ -14,7 +14,7 @@ function parse(string $filepath)
         throw new \Exception("Не удалось прочитать файл");
     }
 
-    switch (pathinfo($filepath)) {
+    switch (pathinfo($filepath, PATHINFO_EXTENSION)) {
         case 'json':
             return json_decode($content, true);
         case 'yml':
