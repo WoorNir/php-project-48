@@ -4,7 +4,7 @@ namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parse(string $filepath)
+function parse(string $filepath): array
 {
     if (!is_readable($filepath)) {
         throw new \Exception("Неккоректно задан путь");

@@ -4,7 +4,7 @@ namespace Differ\Formatters\Stylish;
 
 const SPACE_COUNTS = 4;
 
-function getStylish(array $diff)
+function getStylish(array $diff): string
 {
     $body = makeBody($diff);
     return "{\n{$body}\n}\n";

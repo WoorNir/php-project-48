@@ -34,7 +34,7 @@ function getPlainLines(array $diff, string $path): array
     $diff);
 }
 
-function formatValue(mixed $value)
+function formatValue(mixed $value): string
 {
     return match (gettype($value)) {
         'boolean' => $value ? 'true' : 'false',
