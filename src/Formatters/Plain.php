@@ -30,8 +30,7 @@ function getPlainLines(array $diff, string $path): array
             default:
                 throw new \Exception("Ошибка определения типа узла");
         };
-    },
-    $diff);
+    }, $diff);
 }
 
 function formatValue(mixed $value): string
