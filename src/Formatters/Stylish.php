@@ -30,13 +30,13 @@ function makeBody(array $diff, int $depth = 0): string
     return implode("\n", $body);
 }
 
-function formatValue(mixed $value, int $depth)
+function formatValue(mixed $value, int $depth): string
 {
     return match (gettype($value)) {
         'boolean' => $value ? 'true' : 'false',
         'array' => stylishArray($value, $depth + 1),
         'NULL'=> 'null',
-        default => $value
+        default => (string)$value
     };
 }
 
@@ -72,7 +72,7 @@ function stylishRemovedValue(array $node, int $depth)
 function stylishUnchangedValue(array $node, int $depth)
 {
     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
-    $value = formatValue($node['unchangedValue'], $depth);
+    $value = formatValue($node['oldValue'], $depth);
     return "{$indent}    {$node['key']}: $value";
 }
 
