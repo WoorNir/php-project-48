@@ -19,7 +19,7 @@ function makeDiff(array $first, array $second): array
     $keys = array_unique(array_merge(array_keys($first), array_keys($second)));
     $sortedKeys = sort($keys, fn($key1, $key2) => $key1 <=> $key2);
     return array_map(
-        function($key) use ($first, $second) {
+        function ($key) use ($first, $second) {
             if (array_key_exists($key, $first) && array_key_exists($key, $second)) {
                 if (is_array($first[$key]) && is_array($second[$key])) {
                     $node = setNode('nested', $key, null, null, makeDiff($first[$key], $second[$key]));
@@ -33,8 +33,10 @@ function makeDiff(array $first, array $second): array
             } else {
                 $node = setNode('added', $key, null, $second[$key]);
             }
-        return $node;
-        }, $sortedKeys);
+            return $node;
+        },
+        $sortedKeys
+    );
 }
 
 function setNode(string $type, string $key, mixed $oldValue, mixed $newValue, array $children = null): array

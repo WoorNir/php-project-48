@@ -16,7 +16,7 @@ function makeBody(array $diff, int $depth = 0)
         $diff,
         function ($acc, array $node) use ($depth) {
             switch ($node['type']) {
-                case 'unchanged': 
+                case 'unchanged':
                     $indent = str_repeat(' ', $depth * SPACE_COUNTS);
                     $value = formatValue($node['oldValue'], $depth);
                     $bodyElement = "{$indent}    {$node['key']}: $value";
