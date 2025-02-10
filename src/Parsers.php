@@ -4,7 +4,7 @@ namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parse(string $filepath): array
+function getFileData(string $filepath): string
 {
     if (!is_readable($filepath)) {
         throw new \Exception("Неккоректно задан путь");
@@ -13,6 +13,12 @@ function parse(string $filepath): array
     if ($content === false) {
         throw new \Exception("Не удалось прочитать файл");
     }
+    return $content;
+}
+
+function parse(string $filepath): array
+{
+    $content = getFileData($filepath);
 
     switch (pathinfo($filepath, PATHINFO_EXTENSION)) {
         case 'json':
