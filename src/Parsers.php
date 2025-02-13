@@ -16,11 +16,9 @@ function getFileData(string $filepath): string
     return $content;
 }
 
-function parse(string $filepath): array
+function parse(string $content, string $extension): array
 {
-    $content = getFileData($filepath);
-
-    switch (pathinfo($filepath, PATHINFO_EXTENSION)) {
+    switch ($extension) {
         case 'json':
             return json_decode($content, true);
         case 'yml':
