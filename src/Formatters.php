@@ -2,16 +2,17 @@
 
 namespace Differ\Formatters;
 
-use function Differ\Formatters\Plain\getPlain;
-use function Differ\Formatters\Stylish\getStylish;
-use function Differ\Formatters\Json\getJson;
-
 function getFormatted(array $diff, string $format): string
 {
-    return match ($format) {
-        'stylish' => getStylish($diff),
-        'plain' => getPlain($diff),
-        'json' => getJson($diff),
-        default => throw new \InvalidArgumentException("Некорректно заданный формат")
-    };
+    $formatters = [
+        'stylish' => \Formatters\Stylish\format(...),
+        'plain' => \Formatters\Plain\format(...),
+        'json' => \Formatters\Json\format(...),
+    ];
+
+    if (!array_key_exists($format, $formatters)) {
+        throw new \InvalidArgumentException("Некорректно заданный формат: $format");
+    }
+
+    return $formatters[$format]($diff);
 }

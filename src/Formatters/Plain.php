@@ -1,8 +1,8 @@
 <?php
 
-namespace Differ\Formatters\Plain;
+namespace Formatters\Plain;
 
-function getPlain(array $diff, string $path = ''): string
+function format(array $diff, string $path = ''): string
 {
     $lines = getPlainLines($diff, $path);
     return implode($lines);
@@ -15,7 +15,7 @@ function getPlainLines(array $diff, string $path): array
 
         switch ($node['type']) {
             case 'nested':
-                return getPlain($node['children'], $currentPath);
+                return format($node['children'], $currentPath);
             case 'added':
                 $value = formatValue($node['newValue']);
                 return "Property '{$currentPath}' was added with value: {$value}\n";

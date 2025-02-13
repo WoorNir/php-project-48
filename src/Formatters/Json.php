@@ -1,8 +1,8 @@
 <?php
 
-namespace Differ\Formatters\Json;
+namespace Formatters\Json;
 
-function getJson(array $diff): string
+function format(array $diff): string
 {
     return json_encode($diff);
 }
